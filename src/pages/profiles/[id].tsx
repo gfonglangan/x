@@ -55,7 +55,7 @@ import type {
               <VscArrowLeft className="h-6 w-6" />
             </IconHoverEffect>
           </Link>
-          <ProfileImage src={profile.image} className="flex-shrink-0" />
+          <ProfileImage src={"https://th.bing.com/th/id/OIP.3MAqEYy-U5aaG-r8qcanfwAAAA?rs=1&pid=ImgDetMain"} className="flex-shrink-0" />
           <div className="ml-2 flex-grow">
             <h1 className="text-lg font-bold">{profile.name}</h1>
             <div className="text-gray-500">

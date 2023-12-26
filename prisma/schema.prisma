@@ -11,23 +11,23 @@ datasource db {
 }
 
 model Tweet {
-    id String @id @default(uuid())
-    userId  String
-    content String
+    id        String   @id @default(uuid())
+    userId    String
+    content   String
     createdAt DateTime @default(now())
 
-    user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+    user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     likes Like[]
+
     @@unique([createdAt, id])
     @@index([userId])
-    
 }
 
-model Like{
-    userId String
+model Like {
+    userId  String
     tweetId String
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+    user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Tweet   Tweet  @relation(fields: [tweetId], references: [id], onDelete: Cascade)
 
     @@id([userId, tweetId])
     @@index([userId])
@@ -41,16 +41,17 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? // @db.Text
+    id_token          String? @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -59,6 +60,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model User {
@@ -70,11 +73,11 @@ model User {
     accounts      Account[]
     sessions      Session[]
 
-    // Non-Next Auth    
-    tweet         Tweet[]  
-    likes         Like[]
-    followers     User[] @relation(name: "Followers")
-    follows       User[] @relation(name: "Followers")
+    // Non-Next Auth
+    tweets    Tweet[]
+    likes     Like[]
+    followers User[]  @relation(name: "Followers")
+    follows   User[]  @relation(name: "Followers")
 }
 
 model VerificationToken {

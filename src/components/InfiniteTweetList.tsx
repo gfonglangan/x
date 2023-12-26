@@ -69,10 +69,10 @@ function TweetCard({
   likedByMe,
 }: Tweet) {
   const trpcUtils = api.useContext();
-  const toggleLike = api.tweet.toggleLike.useMutation({
+  const toggleLike = api.tweets_url.toggleLike.useMutation({
     onSuccess: ({ addedLike }) => {
       const updateData: Parameters<
-        typeof trpcUtils.tweet.infiniteFeed.setInfiniteData
+        typeof trpcUtils.tweets_url.infiniteFeed.setInfiniteData
       >[1] = (oldData) => {
         if (oldData == null) return;
 
@@ -99,12 +99,12 @@ function TweetCard({
         };
       };
 
-      trpcUtils.tweet.infiniteFeed.setInfiniteData({}, updateData);
-      trpcUtils.tweet.infiniteFeed.setInfiniteData(
+      trpcUtils.tweets_url.infiniteFeed.setInfiniteData({}, updateData);
+      trpcUtils.tweets_url.infiniteFeed.setInfiniteData(
         { onlyFollowing: true },
         updateData
       );
-      trpcUtils.tweet.infiniteProfileFeed.setInfiniteData(
+      trpcUtils.tweets_url.infiniteProfileFeed.setInfiniteData(
         { userId: user.id },
         updateData
       );
