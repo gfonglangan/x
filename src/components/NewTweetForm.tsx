@@ -37,13 +37,13 @@ function Form() {
     updateTextAreaSize(textAreaRef.current);
   }, [inputValue]);
 
-  const createTweet = api.tweet.create.useMutation({
+  const createTweet = api.tweets_url.create.useMutation({
     onSuccess: (newTweet) => {
       setInputValue("");
 
       if (session.status !== "authenticated") return;
 
-      trpcUtils.tweet.infiniteFeed.setInfiniteData({}, (oldData) => {
+      trpcUtils.tweets.infiniteFeed.setInfiniteData({}, (oldData) => {
         if (oldData == null || oldData.pages[0] == null) return;
 
         const newCacheTweet = {
